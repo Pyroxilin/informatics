@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>todolist</title>
+
+    <script type="text/javascript">
+      document.addEventListener('DOMContentLoaded', function() {
+        var ui = new RootsCalcUI();
+        ui.init();
+
+        // var button = document.querySelector('#countBtn');
+        // var resultDiv = document.querySelector('#result');
+
+        // button.addEventListener('click', function(event){
+        //   event.preventDefault();
+
+        //   var a = document.querySelector('#a').value;
+        //   var b = document.querySelector('#b').value;
+        //   var c = document.querySelector('#c').value;
+        //   var D = b*b - 4*a*c;
+
+        //   result = {}
+        //   if (D >= 0){
+        //     result.x1 = (-b + Math.sqrt(D))/(2*a);
+        //     result.x2 = (-b - Math.sqrt(D))/(2*a);
+        //   } else {
+        //     result.x1 = "NaN";
+        //   }
+
+        //   resultJSON = JSON.stringify(result);
+        //   resultDiv.innerHTML = resultJSON
+        // })
+      });
+
+
+      // obj = {
+      //   a: 1,
+      //   c: function(arg){console.log(arg)},
+      //   printA: function(){ console.log(this.a) }
+      // }
+      // obj.c('hello') // => hello
+      // obj.printA() // => 1
+
+      RootsCalc = function(a,b,c){
+        calculate = function(){
+          var D = this._descriminant();
+
+          result = {}
+          if (D >= 0){
+            result.x1 = (-this.b + Math.sqrt(D))/(2*this.a);
+            result.x2 = (-this.b - Math.sqrt(D))/(2*this.a);
+          } else {
+            result.x1 = "NaN";
+          }
+
+          return result;
+        };
+
+        _descriminant = function(){
+          return this.b*this.b - 4*this.a*this.c;
+        }
+
+        return {
+          a: a,
+          b: b,
+          c: c,
+
+          calculate: calculate,
+          _descriminant: _descriminant
+        }
+      }
+
+
+      RootsCalcUI = function(){
+        init = function(){
+          this._initElements();
+          this._setEventListener();
+        };
+
+        _initElements = function(){
+          this.aInput = document.querySelector('#a');
+          this.bInput = document.querySelector('#b');
+          this.cInput = document.querySelector('#c');
+
+          this.countBtn = document.querySelector('#countBtn');
+          this.resultDiv = document.querySelector('#result');
+        };
+
+        _setEventListener = function(){
+          this.countBtn.addEventListener('click', this._calculate.bind(this))
+        }
+
+        _calculate = function(event){
+          event.preventDefault();
+
+          var a = this.aInput.value;
+          var b = this.bInput.value;
+          var c = this.cInput.value;
+
+          rootsCalc = new RootsCalc(a,b,c);
+          var result = rootsCalc.calculate();
+
+          this._displayResult(result)
+        }
+
+        _calcRoots = function(a, b, c){
+
+        };
+
+        _displayResult = function(result){
+          var resultJSON = JSON.stringify(result);
+          this.resultDiv.innerHTML = resultJSON;
+        }
+
+        return {
+          init: init,
+          _initElements: _initElements,
+          _setEventListener: _setEventListener,
+          _calculate: _calculate,
+          _calcRoots: _calcRoots,
+          _displayResult: _displayResult
+        }
+      }
+    </script>
+  </head>
+
+  <body>
+    <h1>Todolist</h1>
+    <div>
+      <label for='a'>a</label>
+      <input id='a'>
+    </div>
+    <div>
+      <label for='b'>b</label>
+      <input id='b'>
+    </div>
+    <div>
+      <label for='c'>c</label>
+      <input id='c'>
+      </div><br>
+
+    <button id='countBtn'>Count!</button>
+
+    <div id='result'></div>
+  </body>
+</html>
