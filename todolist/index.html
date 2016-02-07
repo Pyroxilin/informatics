@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>todolist</title>
+
+    <script type="text/javascript">
+      document.addEventListener('DOMContentLoaded', function() {
+        var button = document.querySelector('#count');
+        var resultDiv = document.querySelector('#result');
+
+        button.addEventListener('click', function(event){
+          event.preventDefault();
+
+          var a = document.querySelector('#a').value;
+          var b = document.querySelector('#b').value;
+          var c = document.querySelector('#c').value;
+          var D = b*b - 4*a*c;
+
+          result = {}
+          if (D >= 0){
+            result.x1 = (-b + Math.sqrt(D))/(2*a);
+            result.x2 = (-b - Math.sqrt(D))/(2*a);
+          } else {
+            result.x1 = "NaN";
+          }
+
+          resultJSON = JSON.stringify(result);
+          resultDiv.innerHTML = resultJSON
+        })
+      });
+    </script>
+  </head>
+
+  <body>
+    <h1>Todolist</h1>
+    <div>
+      <label for='a'>a</label>
+      <input id='a'>
+    </div>
+    <div>
+      <label for='b'>b</label>
+      <input id='b'>
+    </div>
+    <div>
+      <label for='c'>c</label>
+      <input id='c'>
+      </div><br>
+
+    <button id='count'>Count!</button>
+
+    <div id='result'></div>
+  </body>
+</html>
